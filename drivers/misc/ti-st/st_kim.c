@@ -455,7 +455,7 @@ long st_kim_start(void *kim_data)
 	do {
 		/* platform specific enabling code here */
 		if (pdata->chip_enable)
-			pdata->chip_enable(kim_gdata);
+			pdata->chip_enable();
 
 		/* Configure BT nShutdown to HIGH state */
 		gpio_set_value(kim_gdata->nshutdown, GPIO_LOW);
@@ -551,7 +551,7 @@ long st_kim_stop(void *kim_data)
 
 	/* platform specific disable */
 	if (pdata->chip_disable)
-		pdata->chip_disable(kim_gdata);
+		pdata->chip_disable();
 	return err;
 }
 

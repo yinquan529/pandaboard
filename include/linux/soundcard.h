@@ -1063,8 +1063,9 @@ typedef struct mixer_vol_table {
  *	does not complain about SEQ_USE_EXTBUF.
  */
 #define SEQ_DECLAREBUF()		SEQ_USE_EXTBUF()
+#define _SEQ_EXTERN extern
 
-void seqbuf_dump(void);	/* This function must be provided by programs */
+_SEQ_EXTERN void seqbuf_dump(void);	/* This function must be provided by programs */
 
 #define SEQ_PM_DEFINES int __foo_bar___
 

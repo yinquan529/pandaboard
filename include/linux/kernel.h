@@ -751,6 +751,7 @@ struct sysinfo {
 };
 
 /* To identify board information in panic logs, set this */
-extern char *mach_panic_string;
+#define _NO_USRMODE_EXTERN extern
+_NO_USRMODE_EXTERN char *mach_panic_string;
 
 #endif

@@ -20,6 +20,8 @@
 #ifndef __OMAP_DRM_H__
 #define __OMAP_DRM_H__
 
+#ifdef __KERNEL__
+
 #include <drm/drmP.h>
 
 /* interface that plug-in drivers (for now just PVR) can implement */
@@ -83,5 +85,7 @@ struct omap_drm_platform_data {
 	int dev_cnt;
 	const char **dev_names;
 };
+
+#endif
 
 #endif /* __OMAP_DRM_H__ */

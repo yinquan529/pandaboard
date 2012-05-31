@@ -103,7 +103,7 @@ ifndef PERF_DEBUG
 endif
 
 CFLAGS = -fno-omit-frame-pointer -ggdb3 -Wall -Wextra -std=gnu99 $(CFLAGS_WERROR) $(CFLAGS_OPTIMIZE) -D_FORTIFY_SOURCE=2 $(EXTRA_WARNINGS) $(EXTRA_CFLAGS)
-EXTLIBS = -lpthread -lrt -lelf -lm
+EXTLIBS = -lpthread -lelf -lm
 ALL_CFLAGS = $(CFLAGS) -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
 ALL_LDFLAGS = $(LDFLAGS)
 STRIP ?= strip
@@ -429,10 +429,21 @@ FLAGS_LIBELF=$(ALL_CFLAGS) $(ALL_LDFLAGS) $(EXTLIBS)
 ifneq ($(call try-cc,$(SOURCE_LIBELF),$(FLAGS_LIBELF)),y)
 	FLAGS_GLIBC=$(ALL_CFLAGS) $(ALL_LDFLAGS)
 	ifneq ($(call try-cc,$(SOURCE_GLIBC),$(FLAGS_GLIBC)),y)
-		msg := $(error No gnu/libc-version.h found, please install glibc-dev[el]/glibc-static);
+		ifeq ($(call try-cc,$(SOURCE_BIONIC),$(FLAGS_GLIBC)),y)
+			# Found Bionic instead of glibc...
+			# That works too, but needs a bit of special treatment
+			BASIC_CFLAGS += -DANDROID -include compat-android.h
+			ANDROID := 1
+		else
+			msg := $(error No gnu/libc-version.h found, please install glibc-dev[el]/glibc-static);
+		endif
 	else
 		msg := $(error No libelf.h/libelf found, please install libelf-dev/elfutils-libelf-devel);
 	endif
+endif
+
+ifneq ($(ANDROID),1)
+EXTLIBS += -lrt
 endif
 
 ifneq ($(call try-cc,$(SOURCE_ELF_MMAP),$(FLAGS_COMMON)),y)

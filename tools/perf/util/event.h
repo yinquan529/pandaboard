@@ -5,6 +5,7 @@
 
 #include "../perf.h"
 #include "map.h"
+#include "../compat-android.h"
 
 /*
  * PERF_SAMPLE_IP | PERF_SAMPLE_TID | *

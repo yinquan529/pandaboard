@@ -71,15 +71,19 @@
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 #include <sys/select.h>
+#ifndef ANDROID
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
+#endif
 #include <netdb.h>
 #include <pwd.h>
 #include <inttypes.h>
 #include "../../../include/linux/magic.h"
 #include "types.h"
+#ifndef ANDROID
 #include <sys/ttydefaults.h>
+#endif
 
 extern const char *graph_line;
 extern const char *graph_dotted_line;

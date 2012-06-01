@@ -635,6 +635,18 @@ static struct omap_dss_device  omap4_panda_hdmi_device = {
 	.channel = OMAP_DSS_CHANNEL_DIGIT,
 };
 
+#ifdef CONFIG_MACH_OMAP4_PANDA_DVI_PRIMARY
+static struct omap_dss_device *omap4_panda_dss_devices[] = {
+	&omap4_panda_dvi_device,
+	&omap4_panda_hdmi_device,
+};
+
+static struct omap_dss_board_info omap4_panda_dss_data = {
+	.num_devices	= ARRAY_SIZE(omap4_panda_dss_devices),
+	.devices	= omap4_panda_dss_devices,
+	.default_device	= &omap4_panda_dvi_device,
+};
+#else
 static struct omap_dss_device *omap4_panda_dss_devices[] = {
 	&omap4_panda_hdmi_device,
 	&omap4_panda_dvi_device,
@@ -645,6 +657,7 @@ static struct omap_dss_board_info omap4_panda_dss_data = {
 	.devices	= omap4_panda_dss_devices,
 	.default_device	= &omap4_panda_hdmi_device,
 };
+#endif
 
 void omap4_panda_display_init(void)
 {

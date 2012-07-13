@@ -318,7 +318,7 @@ static void generic_dpi_panel_power_off(struct omap_dss_device *dssdev)
 	if (panel_config->power_off_delay)
 		msleep(panel_config->power_off_delay);
 
-	omapdss_dpi_display_disable(dssdev);
+//	omapdss_dpi_display_disable(dssdev);
 }
 
 static int generic_dpi_panel_probe(struct omap_dss_device *dssdev)

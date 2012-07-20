@@ -15,6 +15,8 @@
 #include "util/parse-events.h"
 #include "util/debugfs.h"
 
+#include <pthread.h>
+
 const char perf_usage_string[] =
 	"perf [--version] [--help] COMMAND [ARGS]";
 

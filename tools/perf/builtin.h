@@ -1,6 +1,10 @@
 #ifndef BUILTIN_H
 #define BUILTIN_H
 
+#ifdef ANDROID
+#define __le32 uint32_t
+#endif
+
 #include "util/util.h"
 #include "util/strbuf.h"
 

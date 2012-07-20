@@ -22,8 +22,12 @@
 #define _COMPAT_ANDROID_H_ 1
 #include <stdio.h>
 #include <signal.h>
-#include <asm/page.h> // for PAGE_SIZE
-#include <asm/termios.h> // for winsize
+#include <asm/page.h> /* for PAGE_SIZE */
+#include <asm/termios.h> /* for winsize */
+
+#ifndef __le32 /* Exists on ICS, but not JB */
+#define __le32 uint32_t
+#endif
 
 #ifndef __WORDSIZE
 #include <stdint.h>
@@ -38,8 +42,9 @@
 #define __force
 #endif
 
-// Assorted functions that are missing from Bionic
-static void psignal(int sig, const char *s) {
+/* Assorted functions that are missing from Bionic */
+static void psignal(int sig, const char *s)
+{
 	if(sig>=0 && sig<NSIG) {
 		if(s)
 			fprintf(stderr, "%s: %s\n", s, sys_siglist[sig]);
@@ -53,7 +58,8 @@ static void psignal(int sig, const char *s) {
 	}
 }
 
-static ssize_t getline(char **lineptr, size_t *n, FILE *stream) {
+static ssize_t getline(char **lineptr, size_t *n, FILE *stream)
+{
 	size_t ret = 0;
 
 	if (!lineptr || !n || !stream)

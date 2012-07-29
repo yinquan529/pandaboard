@@ -96,6 +96,9 @@ struct omapfb2_device {
 
 	unsigned num_displays;
 	struct omapfb_display_data displays[10];
+        bool vsync_active;
+        ktime_t vsync_timestamp;
+        struct work_struct vsync_work;
 	unsigned num_overlays;
 	struct omap_overlay *overlays[10];
 	unsigned num_managers;
@@ -114,6 +117,8 @@ struct omapfb_colormode {
 	struct fb_bitfield transp;
 };
 
+int omapfb_enable_vsync(struct omapfb2_device *fbdev);
+void omapfb_disable_vsync(struct omapfb2_device *fbdev);
 void set_fb_fix(struct fb_info *fbi);
 int check_fb_var(struct fb_info *fbi, struct fb_var_screeninfo *var);
 int omapfb_realloc_fbmem(struct fb_info *fbi, unsigned long size, int type);

@@ -43,6 +43,15 @@
 #endif
 
 /* Assorted functions that are missing from Bionic */
+/* Android prior to 4.2 lacks psignal().
+ * What we're doing here is fairly evil - but necessary since
+ * Bionic doesn't export any version identifier or the likes.
+ * We do know that 4.2 is the version introducing psignal() and
+ * also KLOG_CONSOLE_OFF -- completely unrelated, but something
+ * we can check for...
+ */
+#include <sys/klog.h>
+#ifndef KLOG_CONSOLE_OFF
 static void psignal(int sig, const char *s)
 {
 	if(sig>=0 && sig<NSIG) {
@@ -57,6 +66,7 @@ static void psignal(int sig, const char *s)
 			fputs("invalid signal\n", stderr);
 	}
 }
+#endif
 
 static ssize_t getline(char **lineptr, size_t *n, FILE *stream)
 {
